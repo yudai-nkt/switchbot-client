@@ -1,5 +1,6 @@
 # switchbot-client
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![Test](https://github.com/yudai-nkt/switchbot-client/workflows/Test/badge.svg?branch=master)](https://github.com/yudai-nkt/switchbot-client/actions?query=workflow:Test)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
 Node.js client for SwitchBot API
 
