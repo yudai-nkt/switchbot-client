@@ -4,9 +4,21 @@
 import axios, { AxiosInstance } from "axios";
 import { Response, DeviceList } from "./interface";
 
+/**
+ * The REST API client class.
+ *
+ * This class manipulates SwitchBot devices and infrared appliances using RESTful API.
+ */
 export class RestClient {
+  /**
+   * Axios instance dedicated to SwitchBot API.
+   */
   private readonly axios: AxiosInstance;
 
+  /**
+   * Create a new REST API client instance.
+   * @param accessToken Access token issued by Wonderlabs.
+   */
   constructor(accessToken: string) {
     this.axios = axios.create({
       baseURL: "https://api.switch-bot.com",
@@ -17,6 +29,11 @@ export class RestClient {
     });
   }
 
+  /**
+   * Get a list of devices.
+   * @return List of decices managed by your SwitchBot account.
+   * @throws Will throw an error if the request does not successfully recieve a list.
+   */
   async getDeviceList(): Promise<DeviceList> {
     const response = await this.requestGet<Response>("/v1.0/devices");
     if ("statusCode" in response) {
@@ -34,6 +51,11 @@ export class RestClient {
     }
   }
 
+  /**
+   * Wrapper for `axios.get()`.
+   * @param url
+   * @typeParam T Type of the returned response data.
+   */
   private async requestGet<T>(url: string): Promise<T> {
     try {
       const response = await this.axios.get<T>(url);
