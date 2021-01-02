@@ -9,8 +9,10 @@ type DeviceType =
   | "Humidifier"
   | "Smart Fan";
 
+type DeviceId = string;
+
 interface DeviceGeneric {
-  deviceId: string;
+  deviceId: DeviceId;
   deviceName: string;
   deviceType: Exclude<DeviceType, "Curtain">;
   enableCloudService: boolean;
@@ -19,7 +21,7 @@ interface DeviceGeneric {
 
 interface Curtain extends Omit<DeviceGeneric, "deviceType"> {
   deviceType: "Curtain";
-  curtainDevicesIds: Array<Device["deviceId"]>;
+  curtainDevicesIds: Array<DeviceId>;
   calibrate: boolean;
   group: boolean;
   master: boolean;
@@ -57,20 +59,22 @@ export interface DeviceList {
 }
 
 interface DeviceStatusGeneric {
-  deviceId: Device["deviceId"];
+  deviceId: DeviceId;
   deviceType: Exclude<
     DeviceType,
     "Bot" | "Plug" | "Humidifier" | "Meter" | "Curtain" | "Smart Fan"
   >;
-  hubDeviceId: Device["deviceId"];
+  hubDeviceId: DeviceId;
 }
 
-interface BotOrPlugStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
+type DeviceStatusWithoutType = Omit<DeviceStatusGeneric, "deviceType">;
+
+interface BotOrPlugStatus extends DeviceStatusWithoutType {
   deviceType: "Bot" | "Plug";
   power: string;
 }
 
-interface HumidifierStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
+interface HumidifierStatus extends DeviceStatusWithoutType {
   deviceType: "Humidifier";
   power: string;
   humidity: number;
@@ -81,13 +85,13 @@ interface HumidifierStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
   sound: boolean;
 }
 
-interface MeterStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
+interface MeterStatus extends DeviceStatusWithoutType {
   deviceType: "Meter";
   humidity: number;
   temperature: number;
 }
 
-interface CurtainStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
+interface CurtainStatus extends DeviceStatusWithoutType {
   deviceType: "Curtain";
   calibrate: boolean;
   group: boolean;
@@ -95,7 +99,7 @@ interface CurtainStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
   slidePosition: number;
 }
 
-interface SmartFanStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
+interface SmartFanStatus extends DeviceStatusWithoutType {
   deviceType: "Smart Fan";
   mode: number;
   speed: number;
