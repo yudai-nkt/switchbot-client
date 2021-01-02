@@ -19,4 +19,7 @@ Contributions are welcome. Feel free to report an issue or submit a pull request
 This package is distributed under the MIT License.
 See [LICENSE.md](./LICENSE.md) for details.
 
+## Reference
+- SwitchBot API documentation: https://github.com/OpenWonderLabs/SwitchBotAPI
+
 [API documentation]: https://yudai-nkt.github.io/switchbot-client
