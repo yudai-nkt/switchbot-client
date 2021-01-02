@@ -28,6 +28,18 @@ beforeEach(() => {
         ],
       },
       message: "success",
+    })
+    .get("/v1.0/devices/C271111EC0AB/status")
+    .reply(200, {
+      statusCode: 100,
+      body: {
+        deviceId: "C271111EC0AB",
+        deviceType: "Meter",
+        hubDeviceId: "FA7310762361",
+        humidity: 52,
+        temperature: 26.1,
+      },
+      message: "success",
     });
 });
 
@@ -54,6 +66,21 @@ describe("test suite for RestClient.getDeviceList()", () => {
           hubDeviceId: "FA7310762361",
         },
       ],
+    });
+  });
+});
+
+describe("test suite for RestClient.getDeviceStatus()", () => {
+  const client = new RestClient(ACCESS_TOKEN);
+  it("should return a status of Meter", async () => {
+    const response = await client.getDeviceStatus("C271111EC0AB");
+
+    expect(response).toEqual({
+      deviceId: "C271111EC0AB",
+      deviceType: "Meter",
+      hubDeviceId: "FA7310762361",
+      humidity: 52,
+      temperature: 26.1,
     });
   });
 });

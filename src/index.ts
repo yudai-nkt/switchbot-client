@@ -2,7 +2,7 @@
 /// <reference path="../node_modules/better-typescript-lib/lib.es6.d.ts" />
 
 import axios, { AxiosInstance } from "axios";
-import { Response, DeviceList } from "./interface";
+import { Response, DeviceList, DeviceStatus } from "./interface";
 
 /**
  * The REST API client class.
@@ -35,7 +35,34 @@ export class RestClient {
    * @throws Will throw an error if the request does not successfully recieve a list.
    */
   async getDeviceList(): Promise<DeviceList> {
-    const response = await this.requestGet<Response>("/v1.0/devices");
+    const response = await this.requestGet<Response<DeviceList>>(
+      "/v1.0/devices"
+    );
+    if ("statusCode" in response) {
+      if (response.statusCode === 100) {
+        return response.body;
+      } else {
+        throw new Error(
+          "Device internal error due to device states not synchronized with server"
+        );
+      }
+    } else {
+      throw new Error(
+        "Http 401 Error. User permission is denied due to invalid token."
+      );
+    }
+  }
+
+  /**
+   * Get the status of a physical device.
+   * @param deviceId ID of the device you want to get the status of.
+   * @return Status of the specified physical device.
+   * @throws Will throw an error if the request does not successfully recieve a status.
+   */
+  async getDeviceStatus(deviceId: string): Promise<DeviceStatus> {
+    const response = await this.requestGet<Response<DeviceStatus>>(
+      `/v1.0/devices/${deviceId}/status`
+    );
     if ("statusCode" in response) {
       if (response.statusCode === 100) {
         return response.body;

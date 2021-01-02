@@ -56,10 +56,66 @@ export interface DeviceList {
   infraredRemoteList: Array<InfraredRemote>;
 }
 
-interface ResponseSuccess {
+interface DeviceStatusGeneric {
+  deviceId: Device["deviceId"];
+  deviceType: Exclude<
+    DeviceType,
+    "Bot" | "Plug" | "Humidifier" | "Meter" | "Curtain" | "Smart Fan"
+  >;
+  hubDeviceId: Device["deviceId"];
+}
+
+interface BotOrPlugStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
+  deviceType: "Bot" | "Plug";
+  power: string;
+}
+
+interface HumidifierStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
+  deviceType: "Humidifier";
+  power: string;
+  humidity: number;
+  temperature: number;
+  nebulizationEfficiency: number;
+  auto: boolean;
+  childLock: boolean;
+  sound: boolean;
+}
+
+interface MeterStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
+  deviceType: "Meter";
+  humidity: number;
+  temperature: number;
+}
+
+interface CurtainStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
+  deviceType: "Curtain";
+  calibrate: boolean;
+  group: boolean;
+  moving: boolean;
+  slidePosition: number;
+}
+
+interface SmartFanStatus extends Omit<DeviceStatusGeneric, "deviceType"> {
+  deviceType: "Smart Fan";
+  mode: number;
+  speed: number;
+  shaking: boolean;
+  shakeCenter: number;
+  shakeRange: number;
+}
+
+export type DeviceStatus =
+  | DeviceStatusGeneric
+  | BotOrPlugStatus
+  | HumidifierStatus
+  | MeterStatus
+  | CurtainStatus
+  | SmartFanStatus;
+
+interface ResponseSuccess<T> {
   statusCode: 100;
   message: "success";
-  body: DeviceList;
+  body: T;
 }
 
 interface ResponseUnauthorized {
@@ -71,7 +127,7 @@ interface ResponseSystemError {
   message: "System error";
 }
 
-export type Response =
-  | ResponseSuccess
+export type Response<T> =
+  | ResponseSuccess<T>
   | ResponseUnauthorized
   | ResponseSystemError;
