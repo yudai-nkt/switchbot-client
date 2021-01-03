@@ -13,9 +13,12 @@
     "build:doc": "typedoc",
     "bump": "standard-version",
     "bump:dryrun": "standard-version --dry-run",
+    "check:fmt": "prettier --check src/",
+    "check:type": "tsc --noEmit",
     "lint": "eslint --ext .ts ./src/",
     "prepublishOnly": "rimraf dist/ && npm run build",
-    "test": "jest"
+    "test": "npm run check:fmt && npm run check:type && npm run lint && npm run test:jest",
+    "test:jest": "jest"
   },
   "repository": {
     "type": "git",
