@@ -122,11 +122,11 @@ type TurnOnOff = {
   commandType?: "command";
 };
 
-export type BotCommand =
+type BotCommand =
   | TurnOnOff
   | { command: "press"; parameter?: "default"; commandType?: "command" };
 
-export type PlugCommand = TurnOnOff;
+type PlugCommand = TurnOnOff;
 
 type CurtainCommand =
   | TurnOnOff
