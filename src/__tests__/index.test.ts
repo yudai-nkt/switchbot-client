@@ -40,6 +40,16 @@ beforeEach(() => {
         temperature: 26.1,
       },
       message: "success",
+    })
+    .post("/v1.0/devices/210/commands", {
+      command: "turnOn",
+      parameter: "default",
+      commandType: "command",
+    })
+    .reply(200, {
+      statusCode: 100,
+      body: {},
+      message: "success",
     });
 });
 
@@ -82,5 +92,18 @@ describe("test suite for RestClient.getDeviceStatus()", () => {
       humidity: 52,
       temperature: 26.1,
     });
+  });
+});
+
+describe("test suite for RestClient.sendControlCommand()", () => {
+  const client = new RestClient(ACCESS_TOKEN);
+  it("should return a status of Meter", async () => {
+    const response = await client.sendControlCommand("210", {
+      command: "turnOn",
+      parameter: "default",
+      commandType: "command",
+    });
+
+    expect(response).toEqual({});
   });
 });

@@ -116,6 +116,51 @@ export type DeviceStatus =
   | CurtainStatus
   | SmartFanStatus;
 
+type TurnOnOff = {
+  command: "turnOn" | "turnOff";
+  parameter?: "default";
+  commandType?: "command";
+};
+
+export type BotCommand =
+  | TurnOnOff
+  | { command: "press"; parameter?: "default"; commandType?: "command" };
+
+export type PlugCommand = TurnOnOff;
+
+type CurtainCommand =
+  | TurnOnOff
+  | {
+      command: "setPosition";
+      parameter?: `${number},${0 | 1 | "ff"},${number}`;
+      commandType?: "command";
+    };
+
+type HumidifierCommand =
+  | TurnOnOff
+  | {
+      command: "setMode";
+      parameter?: "auto" | "101" | "102" | "103" | number;
+      commandType?: "command";
+    };
+
+type SmartFanCommand =
+  | TurnOnOff
+  | {
+      command: "setAllStatus";
+      parameter?: `${"on" | "off"},${1 | 2},${1 | 2 | 3 | 4},${number}`;
+      commandType?: "command";
+    };
+
+export type PhysicalCommand =
+  | BotCommand
+  | PlugCommand
+  | CurtainCommand
+  | HumidifierCommand
+  | SmartFanCommand;
+
+export type CommandResponseBody = Record<string, never>;
+
 interface ResponseSuccess<T> {
   statusCode: 100;
   message: "success";
@@ -134,4 +179,7 @@ interface ResponseSystemError {
 export type Response<T> =
   | ResponseSuccess<T>
   | ResponseUnauthorized
-  | ResponseSystemError;
+  | ResponseSystemError
+  | (T extends CommandResponseBody
+      ? { statusCode: 151 | 152 | 160 | 161 | 171 }
+      : never);

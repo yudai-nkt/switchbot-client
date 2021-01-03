@@ -2,7 +2,13 @@
 /// <reference path="../node_modules/better-typescript-lib/lib.es6.d.ts" />
 
 import axios, { AxiosInstance } from "axios";
-import { Response, DeviceList, DeviceStatus } from "./interface";
+import {
+  Response,
+  DeviceList,
+  DeviceStatus,
+  CommandResponseBody,
+  PhysicalCommand,
+} from "./interface";
 
 /**
  * The REST API client class.
@@ -78,6 +84,29 @@ export class RestClient {
     }
   }
 
+  async sendControlCommand(
+    deviceId: string,
+    data: PhysicalCommand
+  ): Promise<CommandResponseBody> {
+    const response = await this.requestPost<Response<CommandResponseBody>>(
+      `/v1.0/devices/${deviceId}/commands`,
+      data
+    );
+    if ("statusCode" in response) {
+      if (response.statusCode === 100) {
+        return response.body;
+      } else {
+        throw new Error(
+          "Device internal error due to device states not synchronized with server"
+        );
+      }
+    } else {
+      throw new Error(
+        "Http 401 Error. User permission is denied due to invalid token."
+      );
+    }
+  }
+
   /**
    * Wrapper for `axios.get()`.
    * @param url
@@ -86,6 +115,25 @@ export class RestClient {
   private async requestGet<T>(url: string): Promise<T> {
     try {
       const response = await this.axios.get<T>(url);
+      return response.data;
+    } catch (error) {
+      if (error.response !== undefined) {
+        throw new Error(
+          `Something went wrong (HTTP status code: ${error.response.status})`
+        );
+      }
+      throw error;
+    }
+  }
+
+  private async requestPost<T>(
+    url: string,
+    data: Record<string, unknown>
+  ): Promise<T> {
+    try {
+      const response = await this.axios.post<T>(url, data, {
+        headers: { "Content-Type": "application/json; charset=utf8" },
+      });
       return response.data;
     } catch (error) {
       if (error.response !== undefined) {
