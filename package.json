@@ -32,7 +32,7 @@
   "bugs": {
     "url": "https://github.com/yudai-nkt/switchbot-client/issues"
   },
-  "homepage": "https://github.com/yudai-nkt/switchbot-client#readme",
+  "homepage": "https://yudai-nkt.github.io/switchbot-client/",
   "dependencies": {
     "axios": "^0.21.1"
   },
