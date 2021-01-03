@@ -185,5 +185,7 @@ export type Response<
   | ResponseUnauthorized
   | ResponseSystemError
   | (T extends CommandResponseBody
-      ? { statusCode: 151 | 152 | 160 | 161 | 171 }
+      ?
+          | { statusCode: 151 | 152 | 161 | 171; message: string; body: T }
+          | { statusCode: 160; message: "No this command"; body: T }
       : never);
