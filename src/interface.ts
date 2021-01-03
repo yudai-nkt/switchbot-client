@@ -161,7 +161,9 @@ export type PhysicalCommand =
 
 export type CommandResponseBody = Record<string, never>;
 
-interface ResponseSuccess<T> {
+interface ResponseSuccess<
+  T extends DeviceList | DeviceStatus | CommandResponseBody
+> {
   statusCode: 100;
   message: "success";
   body: T;
@@ -176,7 +178,9 @@ interface ResponseSystemError {
   message: "System error";
 }
 
-export type Response<T> =
+export type Response<
+  T extends DeviceList | DeviceStatus | CommandResponseBody
+> =
   | ResponseSuccess<T>
   | ResponseUnauthorized
   | ResponseSystemError
