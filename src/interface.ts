@@ -116,41 +116,32 @@ export type DeviceStatus =
   | CurtainStatus
   | SmartFanStatus;
 
-type TurnOnOff = {
-  command: "turnOn" | "turnOff";
-  parameter?: "default";
-  commandType?: "command";
-};
+type BuildControlCommand<
+  T extends string,
+  U extends string | number = "default",
+  V extends "command" | "customize" = "command"
+> = { command: T; parameter?: U; commandType?: V };
 
-type BotCommand =
-  | TurnOnOff
-  | { command: "press"; parameter?: "default"; commandType?: "command" };
+type TurnOnOff = BuildControlCommand<"turnOn" | "turnOff">;
+
+type BotCommand = TurnOnOff | BuildControlCommand<"press">;
 
 type PlugCommand = TurnOnOff;
 
 type CurtainCommand =
   | TurnOnOff
-  | {
-      command: "setPosition";
-      parameter?: `${number},${0 | 1 | "ff"},${number}`;
-      commandType?: "command";
-    };
+  | BuildControlCommand<"setPosition", `${number},${0 | 1 | "ff"},${number}`>;
 
 type HumidifierCommand =
   | TurnOnOff
-  | {
-      command: "setMode";
-      parameter?: "auto" | "101" | "102" | "103" | number;
-      commandType?: "command";
-    };
+  | BuildControlCommand<"setMode", "auto" | "101" | "102" | "103" | number>;
 
 type SmartFanCommand =
   | TurnOnOff
-  | {
-      command: "setAllStatus";
-      parameter?: `${"on" | "off"},${1 | 2},${1 | 2 | 3 | 4},${number}`;
-      commandType?: "command";
-    };
+  | BuildControlCommand<
+      "setAllStatus",
+      `${"on" | "off"},${1 | 2},${1 | 2 | 3 | 4},${number}`
+    >;
 
 type PhysicalCommand =
   | BotCommand
@@ -161,67 +152,43 @@ type PhysicalCommand =
 
 type AirConditionerCommand =
   | TurnOnOff
-  | {
-      command: "setAll";
-      parameter?: `${number},${1 | 2 | 3 | 4 | 5},${1 | 2 | 3 | 4},${
-        | "on"
-        | "off"}`;
-      commandType?: "command";
-    };
+  | BuildControlCommand<
+      "setAll",
+      `${number},${1 | 2 | 3 | 4 | 5},${1 | 2 | 3 | 4},${"on" | "off"}`
+    >;
 
 // TV means TV, IPTV/Streamer, and Set Top Box here.
 type TvCommand =
   | TurnOnOff
-  | {
-      command: "SetChannel";
-      parameter?: number;
-      commandType?: "command";
-    }
-  | {
-      command: `${"volume" | "channel"}${"Add" | "Sub"}`;
-      parameter?: "default";
-      commandType?: "command";
-    };
+  | BuildControlCommand<"SetChannel", number>
+  | BuildControlCommand<`${"volume" | "channel"}${"Add" | "Sub"}`>;
 
 type DvdCommand =
   | TurnOnOff
-  | {
-      command:
-        | "setMute"
-        | "FastForward"
-        | "Rewind"
-        | "Next"
-        | "Previous"
-        | "Pause"
-        | "Play"
-        | "Stop";
-      parameter?: "default";
-      commandType?: "command";
-    };
+  | BuildControlCommand<
+      | "setMute"
+      | "FastForward"
+      | "Rewind"
+      | "Next"
+      | "Previous"
+      | "Pause"
+      | "Play"
+      | "Stop"
+    >;
 
 type SpeakerCommand =
   | DvdCommand
-  | {
-      command: "volumeAdd" | "volumeSub";
-      parameter?: "default";
-      commandType?: "command";
-    };
+  | BuildControlCommand<"volumeAdd" | "volumeSub">;
 
 type FanCommand =
   | TurnOnOff
-  | {
-      command: "swing" | "timer" | "lowSpeed" | "middleSpeed" | "highSpeed";
-      parameter?: "default";
-      commandType?: "command";
-    };
+  | BuildControlCommand<
+      "swing" | "timer" | "lowSpeed" | "middleSpeed" | "highSpeed"
+    >;
 
 type LightCommand =
   | TurnOnOff
-  | {
-      command: "brightnessUp" | "brightnessDown";
-      parameter: "default";
-      commandType: "command";
-    };
+  | BuildControlCommand<"brightnessUp" | "brightnessDown">;
 
 type InfraredCommand =
   | AirConditionerCommand
