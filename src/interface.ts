@@ -152,12 +152,86 @@ type SmartFanCommand =
       commandType?: "command";
     };
 
-export type PhysicalCommand =
+type PhysicalCommand =
   | BotCommand
   | PlugCommand
   | CurtainCommand
   | HumidifierCommand
   | SmartFanCommand;
+
+type AirConditionerCommand =
+  | TurnOnOff
+  | {
+      command: "setAll";
+      parameter?: `${number},${1 | 2 | 3 | 4 | 5},${1 | 2 | 3 | 4},${
+        | "on"
+        | "off"}`;
+      commandType?: "command";
+    };
+
+// TV means TV, IPTV/Streamer, and Set Top Box here.
+type TvCommand =
+  | TurnOnOff
+  | {
+      command: "SetChannel";
+      parameter?: number;
+      commandType?: "command";
+    }
+  | {
+      command: `${"volume" | "channel"}${"Add" | "Sub"}`;
+      parameter?: "default";
+      commandType?: "command";
+    };
+
+type DvdCommand =
+  | TurnOnOff
+  | {
+      command:
+        | "setMute"
+        | "FastForward"
+        | "Rewind"
+        | "Next"
+        | "Previous"
+        | "Pause"
+        | "Play"
+        | "Stop";
+      parameter?: "default";
+      commandType?: "command";
+    };
+
+type SpeakerCommand =
+  | DvdCommand
+  | {
+      command: "volumeAdd" | "volumeSub";
+      parameter?: "default";
+      commandType?: "command";
+    };
+
+type FanCommand =
+  | TurnOnOff
+  | {
+      command: "swing" | "timer" | "lowSpeed" | "middleSpeed" | "highSpeed";
+      parameter?: "default";
+      commandType?: "command";
+    };
+
+type LightCommand =
+  | TurnOnOff
+  | {
+      command: "brightnessUp" | "brightnessDown";
+      parameter: "default";
+      commandType: "command";
+    };
+
+type InfraredCommand =
+  | AirConditionerCommand
+  | TvCommand
+  | DvdCommand
+  | SpeakerCommand
+  | FanCommand
+  | LightCommand;
+
+export type DeviceCommand = PhysicalCommand | InfraredCommand;
 
 export type CommandResponseBody = Record<string, never>;
 

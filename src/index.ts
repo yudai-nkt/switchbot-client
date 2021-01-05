@@ -7,7 +7,7 @@ import {
   DeviceList,
   DeviceStatus,
   CommandResponseBody,
-  PhysicalCommand,
+  DeviceCommand,
 } from "./interface";
 
 /**
@@ -86,7 +86,7 @@ export class RestClient {
 
   async sendControlCommand(
     deviceId: string,
-    data: PhysicalCommand
+    data: DeviceCommand
   ): Promise<CommandResponseBody> {
     const response = await this.requestPost<Response<CommandResponseBody>>(
       `/v1.0/devices/${deviceId}/commands`,
