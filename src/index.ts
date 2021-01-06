@@ -140,7 +140,7 @@ export class RestClient {
   }
 
   /**
-   * Execute a manula scene.
+   * Execute a manual scene.
    * @return Response of the scene exceution (an empty object at the moment).
    * @throws Will throw an error if the request does not successfully recieve a response.
    */
