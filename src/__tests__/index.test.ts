@@ -130,7 +130,7 @@ describe("test suite for RestClient.getDeviceStatus()", () => {
 
 describe("test suite for RestClient.sendControlCommand()", () => {
   const client = new RestClient(ACCESS_TOKEN);
-  it("should return a status of Meter", async () => {
+  it("should return a response of turn-on command", async () => {
     const response = await client.sendControlCommand("210", {
       command: "turnOn",
       parameter: "default",
