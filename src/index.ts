@@ -6,8 +6,9 @@ import {
   Response,
   DeviceList,
   DeviceStatus,
-  CommandResponseBody,
+  PostResponseBody,
   DeviceCommand,
+  Scene,
 } from "./interface";
 
 /**
@@ -87,10 +88,58 @@ export class RestClient {
   async sendControlCommand(
     deviceId: string,
     data: DeviceCommand
-  ): Promise<CommandResponseBody> {
-    const response = await this.requestPost<Response<CommandResponseBody>>(
+  ): Promise<PostResponseBody> {
+    const response = await this.requestPost<Response<PostResponseBody>>(
       `/v1.0/devices/${deviceId}/commands`,
       data
+    );
+    if ("statusCode" in response) {
+      if (response.statusCode === 100) {
+        return response.body;
+      } else {
+        throw new Error(
+          "Device internal error due to device states not synchronized with server"
+        );
+      }
+    } else {
+      throw new Error(
+        "Http 401 Error. User permission is denied due to invalid token."
+      );
+    }
+  }
+
+  /**
+   * Get a list of scenes.
+   * @return List of scenes managed by your SwitchBot account.
+   * @throws Will throw an error if the request does not successfully recieve a list.
+   */
+  async getSceneList(): Promise<Array<Scene>> {
+    const response = await this.requestGet<Response<Array<Scene>>>(
+      "/v1.0/scenes"
+    );
+    if ("statusCode" in response) {
+      if (response.statusCode === 100) {
+        return response.body;
+      } else {
+        throw new Error(
+          "Device internal error due to device states not synchronized with server"
+        );
+      }
+    } else {
+      throw new Error(
+        "Http 401 Error. User permission is denied due to invalid token."
+      );
+    }
+  }
+
+  /**
+   * Execute a manula scene.
+   * @return Response of the scene exceution (an empty object at the moment).
+   * @throws Will throw an error if the request does not successfully recieve a response.
+   */
+  async execScene(sceneId: Scene["sceneId"]): Promise<PostResponseBody> {
+    const response = await this.requestPost<Response<PostResponseBody>>(
+      `/v1.0/scenes/${sceneId}/execute`
     );
     if ("statusCode" in response) {
       if (response.statusCode === 100) {
@@ -128,7 +177,7 @@ export class RestClient {
 
   private async requestPost<T>(
     url: string,
-    data: Record<string, unknown>
+    data?: Record<string, unknown>
   ): Promise<T> {
     try {
       const response = await this.axios.post<T>(url, data, {

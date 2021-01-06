@@ -200,10 +200,15 @@ type InfraredCommand =
 
 export type DeviceCommand = PhysicalCommand | InfraredCommand;
 
-export type CommandResponseBody = Record<string, never>;
+export interface Scene {
+  sceneId: string;
+  sceneName: string;
+}
+
+export type PostResponseBody = Record<string, never>;
 
 interface ResponseSuccess<
-  T extends DeviceList | DeviceStatus | CommandResponseBody
+  T extends DeviceList | DeviceStatus | PostResponseBody | Array<Scene>
 > {
   statusCode: 100;
   message: "success";
@@ -220,12 +225,12 @@ interface ResponseSystemError {
 }
 
 export type Response<
-  T extends DeviceList | DeviceStatus | CommandResponseBody
+  T extends DeviceList | DeviceStatus | PostResponseBody | Array<Scene>
 > =
   | ResponseSuccess<T>
   | ResponseUnauthorized
   | ResponseSystemError
-  | (T extends CommandResponseBody
+  | (T extends PostResponseBody
       ?
           | { statusCode: 151 | 152 | 161 | 171; message: string; body: T }
           | { statusCode: 160; message: "No this command"; body: T }

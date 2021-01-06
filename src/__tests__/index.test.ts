@@ -50,6 +50,39 @@ beforeEach(() => {
       statusCode: 100,
       body: {},
       message: "success",
+    })
+    .get("/v1.0/scenes")
+    .reply(200, {
+      statusCode: 100,
+      body: [
+        {
+          sceneId: "T02-20200804130110",
+          sceneName: "Close Office Devices",
+        },
+        {
+          sceneId: "T02-202009221414-48924101",
+          sceneName: "Set Office AC to 25",
+        },
+        {
+          sceneId: "T02-202011051830-39363561",
+          sceneName: "Set Bedroom to 24",
+        },
+        {
+          sceneId: "T02-202011051831-82928991",
+          sceneName: "Turn off home devices",
+        },
+        {
+          sceneId: "T02-202011062059-26364981",
+          sceneName: "Set Bedroom to 26 degree",
+        },
+      ],
+      message: "success",
+    })
+    .post("/v1.0/scenes/T02-202009221414-48924101/execute")
+    .reply(200, {
+      statusCode: 100,
+      body: {},
+      message: "success",
     });
 });
 
@@ -103,6 +136,45 @@ describe("test suite for RestClient.sendControlCommand()", () => {
       parameter: "default",
       commandType: "command",
     });
+
+    expect(response).toEqual({});
+  });
+});
+
+describe("test suite for RestClient.getSceneList()", () => {
+  const client = new RestClient(ACCESS_TOKEN);
+  it("should return a list of scenes", async () => {
+    const response = await client.getSceneList();
+
+    expect(response).toEqual([
+      {
+        sceneId: "T02-20200804130110",
+        sceneName: "Close Office Devices",
+      },
+      {
+        sceneId: "T02-202009221414-48924101",
+        sceneName: "Set Office AC to 25",
+      },
+      {
+        sceneId: "T02-202011051830-39363561",
+        sceneName: "Set Bedroom to 24",
+      },
+      {
+        sceneId: "T02-202011051831-82928991",
+        sceneName: "Turn off home devices",
+      },
+      {
+        sceneId: "T02-202011062059-26364981",
+        sceneName: "Set Bedroom to 26 degree",
+      },
+    ]);
+  });
+});
+
+describe("test suite for RestClient.execScene()", () => {
+  const client = new RestClient(ACCESS_TOKEN);
+  it("should return a response of scene execution", async () => {
+    const response = await client.execScene("T02-202009221414-48924101");
 
     expect(response).toEqual({});
   });
