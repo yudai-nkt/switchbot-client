@@ -144,7 +144,7 @@ export class RestClient {
    * @return Response of the scene exceution (an empty object at the moment).
    * @throws Will throw an error if the request does not successfully recieve a response.
    */
-  async execScene(sceneId: Scene["sceneId"]): Promise<PostResponseBody> {
+  async executeScene(sceneId: Scene["sceneId"]): Promise<PostResponseBody> {
     const response = await this.requestPost<Response<PostResponseBody>>(
       `/v1.0/scenes/${sceneId}/execute`
     );
