@@ -73,12 +73,16 @@
 							<h3>Interfaces</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/interface.devicelist.html" class="tsd-kind-icon">Device<wbr>List</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-module"><a href="../interfaces/interface.scene.html" class="tsd-kind-icon">Scene</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="interface.html#response" class="tsd-kind-icon">Response</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="interface.html#devicecommand" class="tsd-kind-icon">Device<wbr>Command</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="interface.html#devicestatus" class="tsd-kind-icon">Device<wbr>Status</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module"><a href="interface.html#postresponsebody" class="tsd-kind-icon">Post<wbr>Response<wbr>Body</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter"><a href="interface.html#response" class="tsd-kind-icon">Response</a></li>
 							</ul>
 						</section>
 					</div>
@@ -87,14 +91,50 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
-					<a name="response" class="tsd-anchor"></a>
-					<h3>Response</h3>
-					<div class="tsd-signature tsd-kind-icon">Response<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ResponseSuccess</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ResponseUnauthorized</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ResponseSystemError</span></div>
+					<a name="devicecommand" class="tsd-anchor"></a>
+					<h3>Device<wbr>Command</h3>
+					<div class="tsd-signature tsd-kind-icon">Device<wbr>Command<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">PhysicalCommand</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">InfraredCommand</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/yudai-nkt/switchbot-client/blob/0a16853/src/interface.ts#L74">interface.ts:74</a></li>
+							<li>Defined in <a href="https://github.com/yudai-nkt/switchbot-client/blob/47cd5f0/src/interface.ts#L201">interface.ts:201</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="devicestatus" class="tsd-anchor"></a>
+					<h3>Device<wbr>Status</h3>
+					<div class="tsd-signature tsd-kind-icon">Device<wbr>Status<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">DeviceStatusGeneric</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">BotOrPlugStatus</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">HumidifierStatus</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">MeterStatus</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">CurtainStatus</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">SmartFanStatus</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yudai-nkt/switchbot-client/blob/47cd5f0/src/interface.ts#L111">interface.ts:111</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module">
+					<a name="postresponsebody" class="tsd-anchor"></a>
+					<h3>Post<wbr>Response<wbr>Body</h3>
+					<div class="tsd-signature tsd-kind-icon">Post<wbr>Response<wbr>Body<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yudai-nkt/switchbot-client/blob/47cd5f0/src/interface.ts#L208">interface.ts:208</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
+					<a name="response" class="tsd-anchor"></a>
+					<h3>Response</h3>
+					<div class="tsd-signature tsd-kind-icon">Response&lt;T&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">ResponseSuccess</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ResponseUnauthorized</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ResponseSystemError</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol"> extends </span><a href="interface.html#postresponsebody" class="tsd-signature-type" data-tsd-kind="Type alias">PostResponseBody</a><span class="tsd-signature-symbol"> ? </span><span class="tsd-signature-symbol">{ </span>body<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">; </span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>statusCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">151</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">152</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">161</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">171</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">{ </span>body<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">; </span>message<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">&quot;No this command&quot;</span><span class="tsd-signature-symbol">; </span>statusCode<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">160</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> : </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/yudai-nkt/switchbot-client/blob/47cd5f0/src/interface.ts#L227">interface.ts:227</a></li>
+						</ul>
+					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>T<span class="tsd-signature-symbol">: </span><a href="../interfaces/interface.devicelist.html" class="tsd-signature-type" data-tsd-kind="Interface">DeviceList</a><span class="tsd-signature-symbol"> | </span><a href="interface.html#devicestatus" class="tsd-signature-type" data-tsd-kind="Type alias">DeviceStatus</a><span class="tsd-signature-symbol"> | </span><a href="interface.html#postresponsebody" class="tsd-signature-type" data-tsd-kind="Type alias">PostResponseBody</a><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/interface.scene.html" class="tsd-signature-type" data-tsd-kind="Interface">Scene</a><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -117,7 +157,19 @@
 					<li class=" tsd-kind-interface tsd-parent-kind-module">
 						<a href="../interfaces/interface.devicelist.html" class="tsd-kind-icon">Device<wbr>List</a>
 					</li>
+					<li class=" tsd-kind-interface tsd-parent-kind-module">
+						<a href="../interfaces/interface.scene.html" class="tsd-kind-icon">Scene</a>
+					</li>
 					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="interface.html#devicecommand" class="tsd-kind-icon">Device<wbr>Command</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="interface.html#devicestatus" class="tsd-kind-icon">Device<wbr>Status</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module">
+						<a href="interface.html#postresponsebody" class="tsd-kind-icon">Post<wbr>Response<wbr>Body</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-module tsd-has-type-parameter">
 						<a href="interface.html#response" class="tsd-kind-icon">Response</a>
 					</li>
 				</ul>
@@ -131,6 +183,7 @@
 		<div class="tsd-legend-group">
 			<ul class="tsd-legend">
 				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+				<li class="tsd-kind-type-alias tsd-has-type-parameter"><span class="tsd-kind-icon">Type alias with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
