@@ -85,6 +85,13 @@ export class RestClient {
     }
   }
 
+  /**
+   * Send a command to manipulate a physical or infrared device.
+   * @param deviceId ID of the device to be controlled.
+   * @param data Command to send.
+   * @return Response of the command exceution (an empty object at the moment).
+   * @throws Will throw an error if the request does not successfully recieve a response.
+   */
   async sendControlCommand(
     deviceId: string,
     data: DeviceCommand
@@ -175,6 +182,12 @@ export class RestClient {
     }
   }
 
+  /**
+   * Wrapper for `axios.post()`.
+   * @param url
+   * @param data HTTP POST data.
+   * @typeParam T Type of the returned response data.
+   */
   private async requestPost<T>(
     url: string,
     data?: Record<string, unknown>
