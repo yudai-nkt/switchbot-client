@@ -174,7 +174,7 @@ describe("test suite for RestClient.getSceneList()", () => {
 describe("test suite for RestClient.execScene()", () => {
   const client = new RestClient(ACCESS_TOKEN);
   it("should return a response of scene execution", async () => {
-    const response = await client.execScene("T02-202009221414-48924101");
+    const response = await client.executeScene("T02-202009221414-48924101");
 
     expect(response).toEqual({});
   });
