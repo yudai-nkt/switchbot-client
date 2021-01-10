@@ -122,7 +122,7 @@ type BuildControlCommand<
   V extends "command" | "customize" = "command"
 > = { command: T; parameter?: U; commandType?: V };
 
-type TurnOnOff = BuildControlCommand<"turnOn" | "turnOff">;
+export type TurnOnOff = BuildControlCommand<"turnOn" | "turnOff">;
 
 type BotCommand = TurnOnOff | BuildControlCommand<"press">;
 
@@ -150,7 +150,7 @@ type PhysicalCommand =
   | HumidifierCommand
   | SmartFanCommand;
 
-type AirConditionerCommand =
+export type AirConditionerCommand =
   | TurnOnOff
   | BuildControlCommand<
       "setAll",
@@ -158,7 +158,7 @@ type AirConditionerCommand =
     >;
 
 // TV means TV, IPTV/Streamer, and Set Top Box here.
-type TvCommand =
+export type TvCommand =
   | TurnOnOff
   | BuildControlCommand<"SetChannel", number>
   | BuildControlCommand<`${"volume" | "channel"}${"Add" | "Sub"}`>;
@@ -186,7 +186,7 @@ type FanCommand =
       "swing" | "timer" | "lowSpeed" | "middleSpeed" | "highSpeed"
     >;
 
-type LightCommand =
+export type LightCommand =
   | TurnOnOff
   | BuildControlCommand<"brightnessUp" | "brightnessDown">;
 
