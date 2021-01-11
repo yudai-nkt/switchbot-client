@@ -1,4 +1,4 @@
-import { RestClient } from "../index";
+import { RestClient } from "../client";
 import nock from "nock";
 
 const ACCESS_TOKEN = "fake_token";
