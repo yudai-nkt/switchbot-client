@@ -1,14 +1,14 @@
 import { RestClient } from "./client";
 import {
-  DeviceCommand,
   PostResponseBody,
   LightCommand,
   TvCommand,
   AirConditionerCommand,
   TurnOnOff,
+  InfraredCommand,
 } from "./interface";
 
-abstract class InfraredDevice {
+abstract class InfraredDevice<T extends InfraredCommand> {
   protected readonly client: RestClient;
   protected readonly deviceId: string;
   // TODO: this should ideally be a static abstract property.
@@ -61,9 +61,12 @@ abstract class InfraredDevice {
     });
   }
 
-  protected abstract manipulate(
-    command: DeviceCommand
-  ): Promise<PostResponseBody>;
+  protected async manipulate(
+    // subtypes of InfraredCommand don't necessarily contain TurnOnOff.
+    command: T | TurnOnOff
+  ): Promise<PostResponseBody> {
+    return this.client.sendControlCommand(this.deviceId, command);
+  }
 }
 
 /**
@@ -71,12 +74,8 @@ abstract class InfraredDevice {
  *
  * This class manipulates light.
  */
-export class Light extends InfraredDevice {
+export class Light extends InfraredDevice<LightCommand> {
   protected readonly deviceType = /(DIY )?Light/;
-
-  protected async manipulate(command: LightCommand): Promise<PostResponseBody> {
-    return this.client.sendControlCommand(this.deviceId, command);
-  }
 
   /**
    * Change the brightness.
@@ -97,12 +96,8 @@ export class Light extends InfraredDevice {
  *
  * This class manipulates television.
  */
-export class Television extends InfraredDevice {
+export class Television extends InfraredDevice<TvCommand> {
   protected readonly deviceType = /(DIY )?TV/;
-
-  protected async manipulate(command: TvCommand): Promise<PostResponseBody> {
-    return this.client.sendControlCommand(this.deviceId, command);
-  }
 
   /**
    * Change the TV channel.
@@ -150,14 +145,8 @@ export class Television extends InfraredDevice {
  *
  * This class manipulates air conditioner.
  */
-export class AirConditioner extends InfraredDevice {
+export class AirConditioner extends InfraredDevice<AirConditionerCommand> {
   protected readonly deviceType = /(DIY )?Air Conditioner/;
-
-  protected async manipulate(
-    command: AirConditionerCommand
-  ): Promise<PostResponseBody> {
-    return this.client.sendControlCommand(this.deviceId, command);
-  }
 
   async setParams(
     temperature: number,

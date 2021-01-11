@@ -190,7 +190,7 @@ export type LightCommand =
   | TurnOnOff
   | BuildControlCommand<"brightnessUp" | "brightnessDown">;
 
-type InfraredCommand =
+export type InfraredCommand =
   | AirConditionerCommand
   | TvCommand
   | DvdCommand
