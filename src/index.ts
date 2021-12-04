@@ -2,4 +2,4 @@
 /// <reference path="../node_modules/better-typescript-lib/lib.es6.d.ts" />
 
 export { RestClient } from "./client";
-export { AirConditioner, Light, Television } from "./device";
+export { AirConditioner, Light, Television, Dvd, Speaker, Fan } from "./device";

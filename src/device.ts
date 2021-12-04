@@ -4,6 +4,9 @@ import {
   LightCommand,
   TvCommand,
   AirConditionerCommand,
+  DvdCommand,
+  SpeakerCommand,
+  FanCommand,
   TurnOnOff,
   InfraredCommand,
 } from "./interface";
@@ -216,5 +219,256 @@ export class AirConditioner extends InfraredDevice<AirConditionerCommand> {
       >["parameter"],
       commandType: "command",
     });
+  }
+}
+
+/**
+ * The DVD device class.
+ *
+ * This class manipulates DVD player.
+ */
+export class Dvd extends InfraredDevice<DvdCommand> {
+  protected readonly deviceType = /(DIY )?DVD/;
+
+  /**
+   * Mute or unmute the player.
+   */
+  async toggleMute(): Promise<PostResponseBody> {
+    const command: DvdCommand = {
+      command: "setMute",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Fast-forward the video.
+   */
+  async fastForward(): Promise<PostResponseBody> {
+    const command: DvdCommand = {
+      command: "FastForward",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Rewind the video.
+   */
+  async rewind(): Promise<PostResponseBody> {
+    const command: DvdCommand = {
+      command: "Rewind",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Skip to either the previous chapter or the next one.
+   *
+   * @param direction If set to `prev` (resp. `next`), skip to the previous (resp. the next) chapter.
+   */
+  async skipTo(direction: "prev" | "next"): Promise<PostResponseBody> {
+    const command: DvdCommand = {
+      command: direction === "prev" ? "Previous" : "Next",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Pause the video.
+   */
+  async pause(): Promise<PostResponseBody> {
+    const command: DvdCommand = {
+      command: "Pause",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Play or resume the video.
+   */
+  async play(): Promise<PostResponseBody> {
+    const command: DvdCommand = {
+      command: "Play",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Stop the video.
+   */
+  async stop(): Promise<PostResponseBody> {
+    const command: DvdCommand = {
+      command: "Stop",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+}
+
+/**
+ * The speaker device class.
+ *
+ * This class manipulates speaker.
+ */
+export class Speaker extends InfraredDevice<SpeakerCommand> {
+  protected readonly deviceType = /(DIY )?Speaker/;
+
+  /**
+   * Mute or unmute the speaker.
+   */
+  async toggleMute(): Promise<PostResponseBody> {
+    const command: SpeakerCommand = {
+      command: "setMute",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Fast-forward the track.
+   */
+  async fastForward(): Promise<PostResponseBody> {
+    const command: SpeakerCommand = {
+      command: "FastForward",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Rewind the track.
+   */
+  async rewind(): Promise<PostResponseBody> {
+    const command: SpeakerCommand = {
+      command: "Rewind",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Skip to either the previous track or the next one.
+   *
+   * @param direction If set to `prev` (resp. `next`), skip to the previous (resp. the next) track.
+   */
+  async skipTo(direction: "prev" | "next"): Promise<PostResponseBody> {
+    const command: SpeakerCommand = {
+      command: direction === "prev" ? "Previous" : "Next",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Pause the track.
+   */
+  async pause(): Promise<PostResponseBody> {
+    const command: SpeakerCommand = {
+      command: "Pause",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Play or resume the track.
+   */
+  async play(): Promise<PostResponseBody> {
+    const command: SpeakerCommand = {
+      command: "Play",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Stop the track.
+   */
+  async stop(): Promise<PostResponseBody> {
+    const command: SpeakerCommand = {
+      command: "Stop",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Change the volume.
+   * @param volume If set to `up` (resp. `down`), the volume level increases (resp. decreases).
+   */
+  async changeVolume(volume: "up" | "down"): Promise<PostResponseBody> {
+    const command: SpeakerCommand = {
+      command: volume === "up" ? "volumeAdd" : "volumeSub",
+      parameter: "default",
+      commandType: "command",
+    };
+
+    return this.manipulate(command);
+  }
+}
+
+/**
+ * The fan device class.
+ *
+ * This class manipulates fan.
+ */
+export class Fan extends InfraredDevice<FanCommand> {
+  protected readonly deviceType = /(DIY )?Fan/;
+
+  /**
+   * Swing the fan.
+   */
+  async swing(): Promise<PostResponseBody> {
+    const command: FanCommand = {
+      command: "swing",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Set the timer.
+   */
+  async setTimer(): Promise<PostResponseBody> {
+    const command: FanCommand = {
+      command: "timer",
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
+  }
+
+  /**
+   * Set the fan speed.
+   *
+   * @param level Fan speed level.
+   */
+  async setSpeed(level: "low" | "middle" | "high"): Promise<PostResponseBody> {
+    const command: FanCommand = {
+      command: `${level}Speed` as const,
+      parameter: "default",
+      commandType: "command",
+    };
+    return this.manipulate(command);
   }
 }

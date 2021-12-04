@@ -163,7 +163,7 @@ export type TvCommand =
   | BuildControlCommand<"SetChannel", number>
   | BuildControlCommand<`${"volume" | "channel"}${"Add" | "Sub"}`>;
 
-type DvdCommand =
+export type DvdCommand =
   | TurnOnOff
   | BuildControlCommand<
       | "setMute"
@@ -176,11 +176,11 @@ type DvdCommand =
       | "Stop"
     >;
 
-type SpeakerCommand =
+export type SpeakerCommand =
   | DvdCommand
   | BuildControlCommand<"volumeAdd" | "volumeSub">;
 
-type FanCommand =
+export type FanCommand =
   | TurnOnOff
   | BuildControlCommand<
       "swing" | "timer" | "lowSpeed" | "middleSpeed" | "highSpeed"
