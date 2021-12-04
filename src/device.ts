@@ -211,12 +211,7 @@ export class AirConditioner extends InfraredDevice<AirConditionerCommand> {
 
     return this.manipulate({
       command: "setAll",
-      // TypeScript infers this value as string (not a strict template literal type),
-      // which necessitates this downcasting.
-      parameter: `${temperature},${modeParam},${fanSpeedParam},${powerState}` as Exclude<
-        AirConditionerCommand,
-        TurnOnOff
-      >["parameter"],
+      parameter: `${temperature},${modeParam},${fanSpeedParam},${powerState}` as const,
       commandType: "command",
     });
   }
